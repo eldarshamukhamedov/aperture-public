@@ -1,0 +1,17 @@
+{
+  "name": "@aperture.io/public",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Eldar Shamukhamedov",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo 'TODO:build'",
+    "clean": "echo 'TODO:clean'",
+    "format:check": "echo 'TODO:format:check'",
+    "format:fix": "echo 'TODO:format:fix'",
+    "install": "echo 'TODO:install'",
+    "lint": "echo 'TODO:lint'",
+    "start": "echo 'TODO:start'",
+    "test": "echo 'TODOtest:'"
+  }
+}
