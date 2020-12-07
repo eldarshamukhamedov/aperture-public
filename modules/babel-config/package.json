@@ -1,0 +1,24 @@
+{
+  "private": false,
+  "name": "@aperture.io/babel-config",
+  "version": "1.0.0",
+  "description": "Shared Babel config",
+  "author": "Eldar Shamukhamedov",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "build": "echo 'TODO:build'",
+    "clean": "echo 'TODO:clean'",
+    "format:check": "echo 'TODO:format:check'",
+    "format:fix": "echo 'TODO:format:fix'",
+    "install": "echo 'TODO:install'",
+    "lint": "echo 'TODO:lint'",
+    "start": "echo 'TODO:start'",
+    "test": "echo 'TODO:test'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -17,35 +17,35 @@ n $(cat .node-version)
 ## Scripts
 
 ```sh
-yarn                                      # Install monorepo NPM dependencies
-yarn start                                # Start everything
-yarn start --scope="@aperture.io/editor"  # Start a specific app
-yarn start:docker                         # Start up Docker dev environment
-yarn test                                 # Run all tests
-yarn test:e2e                             # Run Cypress end-to-end tests
-yarn lint:check                           # Check for ESLint issues
-yarn format:check                         # Check for Prettier issues
-yarn format:fix                           # Fix Prettier issues
-yarn types:check                          # Check for Typescript errors
-yarn clean                                # Remove all dependencies
+yarn                                  # Install monorepo NPM dependencies
+yarn start                            # Start everything
+yarn start --scope="<NPM package>"    # Start a specific app
+yarn start:docker                     # Start up Docker dev environment
+yarn test                             # Run all tests
+# yarn test:e2e                         # Run Cypress end-to-end tests
+yarn lint:check                       # Check for ESLint issues
+yarn format:check                     # Check for Prettier issues
+yarn format:fix                       # Fix Prettier issues
+yarn types:check                      # Check for Typescript errors
+yarn clean                            # Remove all dependencies
 ```
 
 ## Code organization
 
 ```sh
-/apps                   # Browser and native apps, backend services, lambdas
-  /api-gateway          # GraphQL endpoint
-  /health-page          # Status page
-  /task-client          # The primary React client app
-  /task-service         # Task management backend
+/apps                         # Browser and native apps, backend services, lambdas
+  /api-gateway                # GraphQL endpoint
+  /example-react-client       # Example React client app
 
-/modules                # Libraries, frameworks, shared configs, utilities
-  /eslint-config        # Monorepo ESLint config
-  /terraform            # Terraform modules
-  /ui                   # Components library
+/modules                      # Libraries, frameworks, shared configs, utilities
+  /babel-config               # Monorepo Babel config
+  /eslint-config              # Monorepo ESLint config
+  /jest-config                # Monorepo jest config
+  /example-react-library      # Example React library
+  /terraform                  # Terraform modules
 
 /infra
-  /aperture-prod        # Production Terraform configs
+  /aperture-prod              # Production Terraform configs
 ```
 
 ## Tips

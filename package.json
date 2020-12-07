@@ -1,17 +1,45 @@
 {
+  "private": true,
   "name": "@aperture.io/public",
   "version": "1.0.0",
   "description": "",
   "author": "Eldar Shamukhamedov",
   "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
-    "build": "echo 'TODO:build'",
-    "clean": "echo 'TODO:clean'",
-    "format:check": "echo 'TODO:format:check'",
-    "format:fix": "echo 'TODO:format:fix'",
-    "install": "echo 'TODO:install'",
-    "lint": "echo 'TODO:lint'",
-    "start": "echo 'TODO:start'",
-    "test": "echo 'TODOtest:'"
+    "build": "npx lerna run --parallel build",
+    "clean": "npx lerna clean -y && rm -rf ./node_modules",
+    "format:check": "npx prettier \"{apps,modules,infra}/**/*.{js,jsx,ts,tsx}\" --list-different",
+    "format:fix": "npx prettier \"{apps,modules,infra}/**/*.{js,jsx,ts,tsx}\" --write",
+    "install": "npx lerna bootstrap",
+    "lint": "npx lerna run --parallel lint",
+    "start": "npx lerna run --parallel start",
+    "test": "npx lerna run --parallel test -- --colors"
+  },
+  "workspaces": [
+    "apps/*",
+    "modules/*",
+    "infra/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx pretty-quick --staged && yarn lint",
+      "pre-push": "npx pretty-quick --staged && yarn lint && yarn test"
+    }
+  },
+  "resolutions": {
+    "yarn": "1.22.5",
+    "**/yarn": "1.22.5"
+  },
+  "devDependencies": {
+    "@octokit/core": "3.2.1",
+    "husky": "4.3.5",
+    "lerna": "3.22.1",
+    "prettier": "2.2.1",
+    "pretty-quick": "3.1.0",
+    "yarn": "1.22.5"
   }
 }
