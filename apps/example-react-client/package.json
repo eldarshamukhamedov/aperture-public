@@ -20,5 +20,7 @@
     "test": "echo 'TODO:test'"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "dotenv": "8.2.0"
+  }
 }
