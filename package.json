@@ -12,17 +12,20 @@
   "scripts": {
     "build": "npx lerna run --parallel build",
     "clean": "npx lerna clean -y && rm -rf ./node_modules",
-    "format:check": "npx prettier \"{apps,modules,infra}/**/*.{js,jsx,ts,tsx}\" --list-different",
-    "format:fix": "npx prettier \"{apps,modules,infra}/**/*.{js,jsx,ts,tsx}\" --write",
-    "install": "npx lerna bootstrap",
+    "format:check": "npx prettier \"{apps,modules}/**/*.{js,jsx,ts,tsx}\" --list-different",
+    "format:fix": "npx prettier \"{apps,modules}/**/*.{js,jsx,ts,tsx}\" --write",
+    "install": "./scripts/vscode/setup.sh && npx lerna bootstrap",
     "lint": "npx lerna run --parallel lint",
     "start": "npx lerna run --parallel start",
-    "test": "npx lerna run --parallel test -- --colors"
+    "start:docker": "docker-compose up",
+    "start:typescript": "npx lerna run --parallel start:typescript",
+    "test": "npx lerna run --parallel test -- --colors",
+    "test:functional": "npx lerna run --parallel test:functional",
+    "types:check": "npx lerna run --parallel types:check"
   },
   "workspaces": [
     "apps/*",
-    "modules/*",
-    "infra/*"
+    "modules/*"
   ],
   "husky": {
     "hooks": {
@@ -40,6 +43,7 @@
     "lerna": "3.22.1",
     "prettier": "2.2.1",
     "pretty-quick": "3.1.0",
+    "typescript": "4.1.2",
     "yarn": "1.22.5"
   }
 }

@@ -6,10 +6,11 @@
 yarn build                            # Build app bundle
 yarn serve                            # Serve app bundle locally using a static file server
 yarn start                            # Start dev server
+yarn start:typescript                 # Start Typescript compiler
 yarn test                             # Run Jest tests
 yarn test:watch                       # Run Jest tests in watch mode
 yarn lint                             # Check for ESLint issues
-yarn types                            # Check for Typescript errors
+yarn types:check                      # Check for Typescript errors
 ```
 
 ## Code organization
@@ -31,6 +32,6 @@ yarn types                            # Check for Typescript errors
     /components                       # App entry point and top-level React components
     /constants                        # App-wide shared constants
     /helpers                          # App-wide shared helpers
-    /types                            # App-wide shared types
     /index.js                         # App entry point
+/types                                # App-wide shared types
 ```

@@ -1,0 +1,25 @@
+{
+  "root": true,
+  "extends": "@aperture.io/eslint-config",
+  "parser": "babel-eslint",
+  "globals": {
+    "APP_HOST": "readonly",
+    "APP_PORT": "readonly",
+    "NODE_ENV": "readonly",
+    "PACKAGE_VERSION": "readonly",
+    "PUBLIC_PATH": "readonly"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx", ".js", ".jsx"],
+        "paths": [
+          "./",
+          "./source",
+          "./apps/example-react-client",
+          "./apps/example-react-client/source"
+        ]
+      }
+    }
+  }
+}

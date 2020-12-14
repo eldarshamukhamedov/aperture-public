@@ -1,4 +1,6 @@
-export default {
+// Note: ESLint does not support ESM config files as of 2020/12/13
+
+module.exports = {
   extends: ['airbnb-base', 'airbnb/rules/react', 'prettier', 'prettier/react'],
   plugins: ['babel'],
   parser: 'babel-eslint',

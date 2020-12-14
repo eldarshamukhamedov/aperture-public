@@ -21,9 +21,10 @@ yarn                                  # Install monorepo NPM dependencies
 yarn start                            # Start everything
 yarn start --scope="<NPM package>"    # Start a specific app
 yarn start:docker                     # Start up Docker dev environment
+yarn start:typescript                 # Start Typescript compiler
 yarn test                             # Run all tests
-# yarn test:e2e                         # Run Cypress end-to-end tests
-yarn lint:check                       # Check for ESLint issues
+yarn test:functional                  # Run Cypress functional tests
+yarn lint                             # Check for ESLint issues
 yarn format:check                     # Check for Prettier issues
 yarn format:fix                       # Fix Prettier issues
 yarn types:check                      # Check for Typescript errors
@@ -43,9 +44,6 @@ yarn clean                            # Remove all dependencies
   /jest-config                # Monorepo jest config
   /example-react-library      # Example React library
   /terraform                  # Terraform modules
-
-/infra
-  /aperture-prod              # Production Terraform configs
 ```
 
 ## Tips
