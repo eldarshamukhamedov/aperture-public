@@ -1,4 +1,4 @@
-# Aperture Public
+# [WIP] Aperture Public Monorepo
 
 ## Setup
 
