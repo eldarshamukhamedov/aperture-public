@@ -12,11 +12,5 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.workingDirectories": [
-    "apps/example-react-client",
-    "modules/babel-config",
-    "modules/eslint-config",
-    "modules/jest-config"
-  ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

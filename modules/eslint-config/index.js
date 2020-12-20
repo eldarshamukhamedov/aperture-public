@@ -9,7 +9,28 @@ module.exports = {
     browser: true,
     node: true,
   },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.mjs', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
   rules: {
+    // Override default `airbnb-base` file extensions rules
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        mjs: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+
+    'arrow-body-style': 0,
     'import/no-extraneous-dependencies': 0,
     'import/no-named-as-default-member': 0,
     'import/no-named-as-default': 0,
