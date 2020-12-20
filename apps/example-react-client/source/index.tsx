@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Entry } from 'core/components/Entry';
 
-function render(ApplicationEntry: React.FunctionComponent) {
+const render = (ApplicationEntry: React.FunctionComponent) => {
   ReactDOM.render(<ApplicationEntry />, document.getElementById('root'));
-}
+};
 render(Entry);
 
 if (module.hot) {

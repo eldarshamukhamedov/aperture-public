@@ -8,19 +8,9 @@
   "engines": {
     "node": ">=14"
   },
-  "scripts": {
-    "build": "echo 'TODO:build'",
-    "clean": "echo 'TODO:clean'",
-    "format:check": "echo 'TODO:format:check'",
-    "format:fix": "echo 'TODO:format:fix'",
-    "install": "echo 'TODO:install'",
-    "lint": "echo 'TODO:lint'",
-    "start": "echo 'TODO:start'",
-    "test": "echo 'TODO:test'"
-  },
   "dependencies": {
     "@babel/core": "7.12.10",
-    "@babel/preset-env": "7.12.10",
+    "@babel/preset-env": "7.12.11",
     "@babel/preset-react": "7.12.10",
     "@babel/preset-typescript": "7.12.7",
     "@babel/plugin-proposal-class-properties": "7.12.1",
@@ -31,6 +21,5 @@
     "react-dom": "17.0.1",
     "react-is": "17.0.1",
     "styled-components": "5.2.1"
-  },
-  "devDependencies": {}
+  }
 }

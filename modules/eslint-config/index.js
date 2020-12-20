@@ -1,14 +1,27 @@
-// Note: ESLint does not support ESM config files as of 2020/12/13
+const {
+  importRules,
+  reactRules,
+  restrictedSyntaxRules,
+  typescriptRules,
+  babelRules,
+  airbnbOverrideRules,
+} = require('./rules');
 
 module.exports = {
-  extends: ['airbnb-base', 'airbnb/rules/react', 'prettier', 'prettier/react'],
+  // As of 12/20/2020:
+  // The newer `@babel/eslint-parser` and `@babel/eslint-plugin` packages do not
+  // play well with the `eslint-plugin-import` rules, so we fallback to the
+  // legacy packages.
   plugins: ['babel'],
   parser: 'babel-eslint',
-  env: {
-    jest: true,
-    browser: true,
-    node: true,
-  },
+
+  // Environments defines global variables that are predefined.
+  // More details:
+  // https://eslint.org/docs/user-guide/configuring#specifying-environments
+  env: { jest: true, browser: true, node: true },
+
+  // More details:
+  // https://eslint.org/docs/user-guide/configuring#adding-shared-settings
   settings: {
     'import/resolver': {
       node: {
@@ -16,80 +29,42 @@ module.exports = {
       },
     },
   },
+
+  // This ESLint config combines rules from:
+  // 1. The presets from the `extends` list,
+  // 2. Custom rules from the `rules` object,
+  // 3. File extensions overrides in the `overrides` list (e.g. Typescript)
+  // Note that the `prettier` presets mostly *disable* rules, rather than add
+  // new ones. This assumes that Prettier is automatically run on the codebase,
+  // whether through your editor or Git hooks. This allows us to disable a lot
+  // of the ESLint formatting rules and rely on Prettier to fix our formatting
+  // instead.
+  // More details:
+  // https://eslint.org/docs/user-guide/configuring#configuring-rules
+  // https://eslint.org/docs/user-guide/configuring#extending-configuration-files
+  // https://eslint.org/docs/user-guide/configuring#specifying-processor
+  // https://www.npmjs.com/package/eslint-plugin-airbnb
+  // https://www.npmjs.com/package/eslint-plugin-prettier
+  extends: [
+    'airbnb',
+    'airbnb/hooks',
+    'prettier',
+    'prettier/react',
+    'prettier/@typescript-eslint',
+  ],
   rules: {
-    // Override default `airbnb-base` file extensions rules
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        mjs: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
-
-    'arrow-body-style': 0,
-    'import/no-extraneous-dependencies': 0,
-    'import/no-named-as-default-member': 0,
-    'import/no-named-as-default': 0,
-    'import/prefer-default-export': 0,
-    'lines-between-class-members': 0,
-    'prefer-destructuring': 0,
-    'react/jsx-filename-extension': 0,
-
-    // Use the `eslint-babel-plugin` version of `no-unused-expressions` to
-    // support optional chaining operators
-    'babel/no-unused-expressions': 2,
-    'no-unused-expressions': 0,
-
-    // Some libraries, such as Immer, rely on direct parameter assignment
-    'no-param-reassign': [
-      2,
-      {
-        props: true,
-        ignorePropertyModificationsFor: ['draft', 'req', 'res', 'ctx'],
-      },
-    ],
-
-    // Forbid the use of imperative loops and classes
-    'no-restricted-syntax': [
-      'error',
-      {
-        selector: 'ClassDeclaration',
-        message: 'Using `class` is not allowed. Use factory functions instead',
-      },
-      {
-        selector: 'ForStatement',
-        message: 'Using `for` is not allowed. Use collection functions instead',
-      },
-      {
-        selector: 'DoWhileStatement',
-        message:
-          'Using `do while` is not allowed. Use collection functions instead',
-      },
-      {
-        selector: 'WhileStatement',
-        message:
-          'Using `while` is not allowed. Use collection functions instead',
-      },
-    ],
+    ...airbnbOverrideRules,
+    ...babelRules,
+    ...importRules,
+    ...reactRules,
+    ...restrictedSyntaxRules,
   },
-
-  // Typescript-specific rules
   overrides: [
     {
       files: ['**/*.ts', '**/*.tsx'],
       plugins: ['@typescript-eslint'],
       parser: '@typescript-eslint/parser',
-      rules: {
-        'no-undef': 0,
-
-        // Use the `typescript-eslint` version of `no-unused-vars`
-        '@typescript-eslint/no-unused-vars': 2,
-        'no-unused-vars': 0,
-      },
+      rules: { ...typescriptRules },
     },
   ],
 };

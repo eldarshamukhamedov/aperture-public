@@ -1,21 +1,18 @@
-export default {
+module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
-    '<rootDir>/source/**/*.{js,jsx,ts,tsx}',
-    '!<rootDir>/source/**/*.d.ts',
-    '!<rootDir>/source/**/__tests__/**/*.{js,jsx,ts,tsx}',
+    '<rootDir>/source/**/*.{js,mjs,jsx,ts,tsx}',
+    '!<rootDir>/source/**/__tests__/**/*.{js,mjs,jsx,ts,tsx}',
   ],
   modulePaths: ['<rootDir>/', '<rootDir>/source'],
-  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
-  setupFiles: [
-    '<rootDir>config/jest/setupEnzyme.js',
-    '<rootDir>config/jest/mocks.js',
-  ],
+  moduleFileExtensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+  setupFilesAfterEnv: ['@aperture.io/jest-config/setupTests.js'],
+  testMatch: ['<rootDir>/source/**/__tests__/**/*.test.{js,mjs,jsx,ts,tsx}'],
   testURL: 'http://localhost:8080',
-  testMatch: ['**/__tests__/**/*.test.{js,jsx,ts,tsx}'],
   transform: {
-    '^.+\\.(js,jsx)$': 'babel-jest',
-    '^.+\\.(ts,tsx)$': 'ts-jest',
-    '^.+\\.(svg)$': '<rootDir>/config/jest/fileTransform.js',
+    '^.+\\.(js|mjs|jsx|json)$': 'babel-jest',
+    '^.+\\.(css|scss)$': '@aperture.io/jest-config/styleMock.js',
+    '^.+\\.(bmp|png|svg|woff)$': '@aperture.io/jest-config/fileMock.js',
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
 };

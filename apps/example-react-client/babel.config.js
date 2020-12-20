@@ -1,3 +1,3 @@
-import baseConfig from '@aperture.io/babel-config';
+const baseConfig = require('@aperture.io/babel-config');
 
-export default baseConfig;
+module.exports = baseConfig;

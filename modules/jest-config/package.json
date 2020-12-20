@@ -8,20 +8,14 @@
   "engines": {
     "node": ">=14"
   },
-  "scripts": {
-    "build": "echo 'TODO:build'",
-    "clean": "echo 'TODO:clean'",
-    "format:check": "echo 'TODO:format:check'",
-    "format:fix": "echo 'TODO:format:fix'",
-    "install": "echo 'TODO:install'",
-    "lint": "echo 'TODO:lint'",
-    "start": "echo 'TODO:start'",
-    "test": "echo 'TODO:test'"
-  },
   "dependencies": {
+    "@babel/core": "7.12.10",
     "@testing-library/jest-dom": "5.11.6",
     "@testing-library/react": "11.2.2",
+    "babel-jest": "26.6.3",
+    "jest": "26.6.3",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "ts-jest": "26.4.4"
   }
 }

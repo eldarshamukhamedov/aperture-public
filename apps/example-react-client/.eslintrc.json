@@ -1,7 +1,6 @@
 {
   "root": true,
   "extends": "@aperture.io/eslint-config",
-  "parser": "babel-eslint",
   "globals": {
     "APP_HOST": "readonly",
     "APP_PORT": "readonly",
