@@ -1,4 +1,6 @@
-import { loadEnv, log } from './utils';
+import { utils } from '@aperture.io/build-tools';
+
+const { loadEnv, log } = utils;
 
 export const config = () => {
   const { APP_HOST, APP_PORT, PUBLIC_DIR, PUBLIC_PATH, WDS } = loadEnv();

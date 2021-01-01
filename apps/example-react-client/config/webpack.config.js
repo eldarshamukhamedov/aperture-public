@@ -1,5 +1,9 @@
 import { resolve as resolvePath, relative as relativePath } from 'path';
-import {
+import { utils, webpack } from '@aperture.io/build-tools';
+import { config as devServerConfig } from './webpackDevServer.config';
+
+const { log, loadEnv, devOrOptimized } = utils;
+const {
   bundleAnalyzerPlugin,
   circularDependencyPlugin,
   copyFaviconPlugin,
@@ -14,8 +18,8 @@ import {
   minimizeJsPlugin,
   restartOnNodeModulesChangePlugin,
   warnOnInconsistentCasingPlugin,
-} from './plugins';
-import {
+} = webpack.plugins;
+const {
   babelLoader,
   cssLoader,
   extractStylesToFileLoader,
@@ -24,9 +28,7 @@ import {
   inlineStylesLoader,
   postCssLoader,
   sassLoader,
-} from './loaders';
-import { log, loadEnv, devOrOptimized } from './utils';
-import { config as devServerConfig } from './webpackDevServer.config';
+} = webpack.loaders;
 
 export const config = async () => {
   const env = loadEnv();

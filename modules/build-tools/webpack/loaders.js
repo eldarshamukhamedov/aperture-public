@@ -1,7 +1,7 @@
 import postcssFlexbugsFixes from 'postcss-flexbugs-fixes';
 import postcssPresetEnv from 'postcss-preset-env';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { devOrOptimized } from './utils';
+import { devOrOptimized } from '../utils';
 
 // Resolve static file imports (catch-all)
 export const fileLoader = () => ({

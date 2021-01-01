@@ -15,7 +15,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModulesPlugin';
 import webpack from 'webpack';
 
-import { devOrOptimized, loadEnv } from './utils';
+import { devOrOptimized, loadEnv } from '../utils';
 
 // Minimize and mangle JS
 export const minimizeJsPlugin = (overrideConfig = {}) => {
