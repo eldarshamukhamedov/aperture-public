@@ -1,4 +1,4 @@
 {
   "preset": "@aperture.io/jest-config",
-  "setupFiles": ["<rootDir>config/jest/mocks.js"]
+  "setupFiles": ["<rootDir>mocks/jestMocks.js"]
 }

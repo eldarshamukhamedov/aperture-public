@@ -1,47 +1,18 @@
 import { resolve as resolvePath, relative as relativePath } from 'path';
 import { utils, webpack } from '@aperture.io/build-tools';
-import { config as devServerConfig } from './webpackDevServer.config';
 
-const { log, loadEnv, devOrOptimized } = utils;
-const {
-  bundleAnalyzerPlugin,
-  circularDependencyPlugin,
-  copyFaviconPlugin,
-  createAssetManifestPlugin,
-  eslintPlugin,
-  extractCssPlugin,
-  hotModuleReplacementPlugin,
-  htmlWebpackPlugin,
-  injectEnvVarsPlugin,
-  interpolateHtmlPlugin,
-  minimizeCssPlugin,
-  minimizeJsPlugin,
-  restartOnNodeModulesChangePlugin,
-  warnOnInconsistentCasingPlugin,
-} = webpack.plugins;
-const {
-  babelLoader,
-  cssLoader,
-  extractStylesToFileLoader,
-  fileLoader,
-  imageLoader,
-  inlineStylesLoader,
-  postCssLoader,
-  sassLoader,
-} = webpack.loaders;
+export const createConfig = async (createDevServerConfig) => {
+  const env = utils.loadEnv();
 
-export const config = async () => {
-  const env = loadEnv();
-
-  log('Package version:', env.PACKAGE_VERSION);
-  log('Code version key:', env.CODE_VERSION_KEY);
-  log(
-    devOrOptimized(
+  utils.log('Package version:', env.PACKAGE_VERSION);
+  utils.log('Code version key:', env.CODE_VERSION_KEY);
+  utils.log(
+    utils.devOrOptimized(
       'Building a development bundle',
       'Building a production-optimized bundle',
     ),
   );
-  log('Environment variables', env);
+  utils.log('Environment variables', env);
 
   return {
     // Switch between developer-optimized and productio-optimized build modes.
@@ -49,7 +20,7 @@ export const config = async () => {
     // chunk names. In production mode, compilation is slower and chunk names
     // are mangled. Production mode also enables other optimizations.
     // More details: https://webpack.js.org/configuration/mode/
-    mode: devOrOptimized('development', 'production'),
+    mode: utils.devOrOptimized('development', 'production'),
 
     // Webpack can compile for multiple environments (aka targets). The most
     // commont targets are `web` (browsers) and `node` (servers)
@@ -70,7 +41,7 @@ export const config = async () => {
     // https://webpack.js.org/concepts/entry-points/
     // https://webpack.js.org/configuration/entry-context/#entry
     entry: [
-      devOrOptimized('react-dev-utils/webpackHotDevClient', null),
+      utils.devOrOptimized('react-dev-utils/webpackHotDevClient', null),
       env.ENTRY,
     ].filter(Boolean),
 
@@ -105,23 +76,23 @@ export const config = async () => {
               test: /\.(jsx?|mjs|tsx?)$/,
               // Don't compile node_modules, except for other symlinked monorepo packages
               exclude: /node_modules\/(?!(@aperture.io\/*)\/).*/,
-              use: [babelLoader()],
+              use: [webpack.loaders.babelLoader()],
             },
 
             // Image imports
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              use: [imageLoader()],
+              use: [webpack.loaders.imageLoader()],
             },
 
             // CSS imports
             {
               test: /\.css$/,
               use: [
-                inlineStylesLoader(),
-                extractStylesToFileLoader(),
-                cssLoader({ importLoaders: 1 }),
-                postCssLoader(),
+                webpack.loaders.inlineStylesLoader(),
+                webpack.loaders.extractStylesToFileLoader(),
+                webpack.loaders.cssLoader({ importLoaders: 1 }),
+                webpack.loaders.postCssLoader(),
               ].filter(Boolean),
             },
 
@@ -130,18 +101,18 @@ export const config = async () => {
               test: /\.scss$/,
               sideEffects: true,
               use: [
-                inlineStylesLoader(),
-                extractStylesToFileLoader(),
-                cssLoader({ importLoaders: 2 }),
-                postCssLoader(),
-                sassLoader(),
+                webpack.loaders.inlineStylesLoader(),
+                webpack.loaders.extractStylesToFileLoader(),
+                webpack.loaders.cssLoader({ importLoaders: 2 }),
+                webpack.loaders.postCssLoader(),
+                webpack.loaders.sassLoader(),
               ].filter(Boolean),
             },
 
             // Catch-all for all other files (e.g. fonts, SVG and HTML fragments)
             {
               exclude: [/\.(js|jsx|mjs|ts|tsx)$/, /\.html$/, /\.json$/],
-              use: [fileLoader()],
+              use: [webpack.loaders.fileLoader()],
             },
           ],
         },
@@ -155,11 +126,11 @@ export const config = async () => {
     output: {
       // Output directory path
       path: env.BUILD_DIR,
-      filename: devOrOptimized(
+      filename: utils.devOrOptimized(
         'static/js/bundle.js',
         'static/js/[name].[contenthash:8].js',
       ),
-      chunkFilename: devOrOptimized(
+      chunkFilename: utils.devOrOptimized(
         'static/js/[name].chunk.js',
         'static/js/[name].[contenthash:8].chunk.js',
       ),
@@ -168,7 +139,7 @@ export const config = async () => {
       // apps.
       publicPath: env.PUBLIC_PATH || '/',
       // Customize sourcemap filenames/paths
-      devtoolModuleFilenameTemplate: devOrOptimized(
+      devtoolModuleFilenameTemplate: utils.devOrOptimized(
         // Point sourcemaps to original disk location in development
         (info) => resolvePath(info.absoluteResourcePath),
         // Use relative paths in production
@@ -181,26 +152,29 @@ export const config = async () => {
     // https://webpack.js.org/plugins/
     // https://webpack.js.org/configuration/plugins/
     plugins: [
-      eslintPlugin(),
-      circularDependencyPlugin(),
-      htmlWebpackPlugin(),
-      interpolateHtmlPlugin(),
-      copyFaviconPlugin(),
-      injectEnvVarsPlugin(),
-      hotModuleReplacementPlugin(),
-      warnOnInconsistentCasingPlugin(),
-      restartOnNodeModulesChangePlugin(),
-      extractCssPlugin(),
-      createAssetManifestPlugin(),
-      bundleAnalyzerPlugin(),
+      webpack.plugins.eslintPlugin(),
+      webpack.plugins.circularDependencyPlugin(),
+      webpack.plugins.htmlWebpackPlugin(),
+      webpack.plugins.interpolateHtmlPlugin(),
+      webpack.plugins.copyFaviconPlugin(),
+      webpack.plugins.injectEnvVarsPlugin(),
+      webpack.plugins.hotModuleReplacementPlugin(),
+      webpack.plugins.warnOnInconsistentCasingPlugin(),
+      webpack.plugins.restartOnNodeModulesChangePlugin(),
+      webpack.plugins.extractCssPlugin(),
+      webpack.plugins.createAssetManifestPlugin(),
+      webpack.plugins.bundleAnalyzerPlugin(),
     ].filter(Boolean),
 
     // Configure Webpack bundle optimizations, such as minimization and
     // automatic chunk-splitting
     // More details: https://webpack.js.org/configuration/optimization/
     optimization: {
-      minimize: devOrOptimized(false, true),
-      minimizer: [minimizeJsPlugin(), minimizeCssPlugin()],
+      minimize: utils.devOrOptimized(false, true),
+      minimizer: [
+        webpack.plugins.minimizeJsPlugin(),
+        webpack.plugins.minimizeCssPlugin(),
+      ],
       // Options used by the internal SplitChunksPlugin to automatically create
       // chunks for reused code.
       // More details: https://webpack.js.org/plugins/split-chunks-plugin/
@@ -214,7 +188,7 @@ export const config = async () => {
     // bundles are usually generated in a CI environment, we want to bail as
     // quickly as possible.
     // More details: https://webpack.js.org/configuration/other-options/#bail
-    bail: devOrOptimized(false, true),
+    bail: utils.devOrOptimized(false, true),
 
     // Disable noisy large bundle filesize warnings unless debugging
     performance: { hints: env.WEBPACK_DEBUG === 'true' },
@@ -227,14 +201,14 @@ export const config = async () => {
     // slow, so it is best used for production-optimized bundles, where source
     // maps are uploaded to third-party services (e.g. Sentry/Bugsnag).
     // More details: https://webpack.js.org/configuration/devtool/
-    devtool: devOrOptimized('eval-source-map', 'source-map'),
+    devtool: utils.devOrOptimized('eval-source-map', 'source-map'),
 
     // Configure WebpackDevServer. WDS is optimized for development workflows
     // and should not be used when building production-optimized bundles. WDS
     // uses an in-memory filesystem and other optimizations to achieve <1s build
     // times.
     // More details: https://webpack.js.org/configuration/dev-server/
-    devServer: devOrOptimized(devServerConfig(), undefined),
+    devServer: utils.devOrOptimized(createDevServerConfig(), undefined),
 
     // Third-party libraries might import Node modules and not use them in the
     // browser. We mock these modules out to avoid including them in the bundle.
@@ -252,5 +226,3 @@ export const config = async () => {
     },
   };
 };
-
-export default config;

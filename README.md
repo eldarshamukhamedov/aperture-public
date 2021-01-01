@@ -40,6 +40,7 @@ yarn clean                            # Remove all dependencies
 
 /modules                      # Libraries, frameworks, shared configs, utilities
   /babel-config               # Monorepo Babel config
+  /build-tools                # Shared build utils and configs (Webpack, Typescript, etc.)
   /eslint-config              # Monorepo ESLint config
   /jest-config                # Monorepo jest config
   /example-react-library      # Example React library

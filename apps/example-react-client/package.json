@@ -9,13 +9,13 @@
     "node": ">=14"
   },
   "scripts": {
-    "build": "OPTIMIZED=true webpack-cli --config-register esm --config ./config/webpack.config.js",
+    "build": "OPTIMIZED=true webpack-cli --config-register esm --config ./webpack.config.js",
     "clean": "echo 'TODO:clean'",
     "format:check": "echo 'TODO:format:check'",
     "format:fix": "echo 'TODO:format:fix'",
     "install": "echo 'TODO:install'",
     "lint": "npx eslint . --ext=js,jsx,ts,tsx",
-    "start": "WDS=true webpack-dev-server --color --config-register esm --config ./config/webpack.config.js",
+    "start": "WDS=true webpack-dev-server --color --config-register esm --config ./webpack.config.js",
     "start:typescript": "npx tsc --watch",
     "test": "NODE_ENV=testing jest . --passWithNoTests",
     "types:check": "npx tsc --noEmit"
