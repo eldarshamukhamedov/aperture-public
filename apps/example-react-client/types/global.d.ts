@@ -1,6 +1,7 @@
 // Injected environment variables
 declare const APP_HOST: string;
 declare const APP_PORT: number;
+declare const CODE_VERSION_KEY: string;
 declare const NODE_ENV: string;
 declare const PACKAGE_VERSION: string;
 declare const PUBLIC_PATH: string;

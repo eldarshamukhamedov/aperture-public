@@ -4,6 +4,7 @@
   "globals": {
     "APP_HOST": "readonly",
     "APP_PORT": "readonly",
+    "CODE_VERSION_KEY": "readonly",
     "NODE_ENV": "readonly",
     "PACKAGE_VERSION": "readonly",
     "PUBLIC_PATH": "readonly"

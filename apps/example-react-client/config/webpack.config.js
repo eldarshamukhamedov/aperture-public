@@ -25,20 +25,21 @@ import {
   postCssLoader,
   sassLoader,
 } from './loaders';
-import { log, loadEnv, prettyPrint, devOrOptimized } from './utils';
+import { log, loadEnv, devOrOptimized } from './utils';
 import { config as devServerConfig } from './webpackDevServer.config';
 
 export const config = async () => {
   const env = loadEnv();
 
-  log('App version key:', env.PACKAGE_VERSION);
+  log('Package version:', env.PACKAGE_VERSION);
+  log('Code version key:', env.CODE_VERSION_KEY);
   log(
     devOrOptimized(
       'Building a development bundle',
       'Building a production-optimized bundle',
     ),
   );
-  log('Environment variables', prettyPrint(env));
+  log('Environment variables', env);
 
   return {
     // Switch between developer-optimized and productio-optimized build modes.
