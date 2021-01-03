@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "paths": {
       "core/*": ["./source/core/*"],
-      "home/*": ["./source/home/*"],
+      "test/*": ["./source/test/*"],
       "types/*": ["./types/*"]
     },
     "target": "es6"

@@ -2,6 +2,7 @@
   "private": false,
   "name": "@aperture.io/example-react-client",
   "version": "1.0.0",
+  "type": "module",
   "description": "Example React client app",
   "author": "Eldar Shamukhamedov",
   "license": "MIT",
@@ -9,13 +10,13 @@
     "node": ">=14"
   },
   "scripts": {
-    "build": "OPTIMIZED=true webpack-cli --config-register esm --config ./webpack.config.js",
+    "build": "DISABLE_V8_COMPILE_CACHE=1 OPTIMIZED=true npx webpack --config ./webpack.config.js",
     "clean": "echo 'TODO:clean'",
     "format:check": "echo 'TODO:format:check'",
     "format:fix": "echo 'TODO:format:fix'",
     "install": "echo 'TODO:install'",
     "lint": "npx eslint . --ext=js,jsx,ts,tsx",
-    "start": "WDS=true webpack-dev-server --color --config-register esm --config ./webpack.config.js",
+    "start": "DISABLE_V8_COMPILE_CACHE=1 WDS=true npx webpack serve --color --config ./webpack.config.js",
     "start:typescript": "npx tsc --watch",
     "test": "NODE_ENV=testing jest . --passWithNoTests",
     "types:check": "npx tsc --noEmit"
@@ -29,7 +30,9 @@
   "dependencies": {
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-router-dom": "5.2.0"
+    "react-is": "17.0.1",
+    "react-router-dom": "5.2.0",
+    "styled-components": "5.2.1"
   },
   "devDependencies": {
     "@aperture.io/babel-config": "1.0.0",
@@ -39,10 +42,11 @@
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
     "@types/react-router-dom": "5.1.6",
+    "@types/styled-components": "5.1.7",
     "eslint": "7.16.0",
     "typescript": "4.1.3",
-    "webpack": "4.44.2",
-    "webpack-cli": "3.3.12",
-    "webpack-dev-server": "3.11.0"
+    "webpack": "5.11.1",
+    "webpack-cli": "4.3.1",
+    "webpack-dev-server": "3.11.1"
   }
 }

@@ -17,7 +17,7 @@
     "target": "es6",
     "paths": {
       "core/*": ["./source/core/*"],
-      "home/*": ["./source/home/*"],
+      "test/*": ["./source/test/*"],
       "types/*": ["./types/*"]
     },
     "typeRoots": [
