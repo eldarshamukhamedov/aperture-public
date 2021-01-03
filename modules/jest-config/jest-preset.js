@@ -11,8 +11,8 @@ module.exports = {
   testURL: 'http://localhost:8080',
   transform: {
     '^.+\\.(js|mjs|jsx|json)$': 'babel-jest',
-    '^.+\\.(css|scss)$': '@aperture.io/jest-config/styleMock.js',
-    '^.+\\.(bmp|png|svg|woff)$': '@aperture.io/jest-config/fileMock.js',
+    '^.+\\.(css|scss)$': '@aperture.io/jest-config/fileTransformer.js',
+    '^.+\\.(bmp|png|svg|woff)$': '@aperture.io/jest-config/fileTransformer.js',
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
 };
