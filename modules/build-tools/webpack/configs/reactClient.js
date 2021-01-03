@@ -12,7 +12,8 @@ export const createConfig = async (createDevServerConfig) => {
       'Building a production-optimized bundle',
     ),
   );
-  utils.log('Environment variables', env);
+  utils.log('Git info:', utils.getGitInfo());
+  utils.log('Environment variables:', env);
 
   return {
     // Switch between developer-optimized and productio-optimized build modes.
@@ -79,12 +80,6 @@ export const createConfig = async (createDevServerConfig) => {
               use: [webpack.loaders.babelLoader()],
             },
 
-            // Image imports
-            {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              use: [webpack.loaders.imageLoader()],
-            },
-
             // CSS imports
             {
               test: /\.css$/,
@@ -109,10 +104,26 @@ export const createConfig = async (createDevServerConfig) => {
               ].filter(Boolean),
             },
 
-            // Catch-all for all other files (e.g. fonts, SVG and HTML fragments)
+            // Asset module imports
+            // Webpack 5 uses asset modules to handle asset files (fonts, icons,
+            // images, etc.). These are the types we use:
+            // - `asset/resource`: emit separate file, export URL
+            // - `asset/inline`: exports base64 data URI
+            // - `asset`: varies by asset file size:
+            //   - <8kb, acts as `asset/inline`
+            //   - >=8kb acts as `asset/resource`
+            // More details:
+            // https://webpack.js.org/guides/asset-modules/
+            // https://webpack.js.org/guides/asset-modules/#resource-assets
+            // https://webpack.js.org/guides/asset-modules/#general-asset-type
             {
+              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+              type: 'asset',
+            },
+            {
+              // Catch-all for everything else
               exclude: [/\.(js|jsx|mjs|ts|tsx)$/, /\.html$/, /\.json$/],
-              use: [webpack.loaders.fileLoader()],
+              type: 'asset/resource',
             },
           ],
         },
@@ -127,7 +138,7 @@ export const createConfig = async (createDevServerConfig) => {
       // Output directory path
       path: env.BUILD_DIR,
       filename: utils.devOrOptimized(
-        'static/js/bundle.js',
+        'static/js/[name].js',
         'static/js/[name].[contenthash:8].js',
       ),
       chunkFilename: utils.devOrOptimized(
@@ -152,6 +163,7 @@ export const createConfig = async (createDevServerConfig) => {
     // https://webpack.js.org/plugins/
     // https://webpack.js.org/configuration/plugins/
     plugins: [
+      webpack.plugins.providePlugin(),
       webpack.plugins.eslintPlugin(),
       webpack.plugins.circularDependencyPlugin(),
       webpack.plugins.htmlWebpackPlugin(),
@@ -209,20 +221,5 @@ export const createConfig = async (createDevServerConfig) => {
     // times.
     // More details: https://webpack.js.org/configuration/dev-server/
     devServer: utils.devOrOptimized(createDevServerConfig(), undefined),
-
-    // Third-party libraries might import Node modules and not use them in the
-    // browser. We mock these modules out to avoid including them in the bundle.
-    // NOTE: This will not be required in Webpack 5
-    // More details: https://webpack.js.org/configuration/node/
-    node: {
-      module: 'empty',
-      dgram: 'empty',
-      dns: 'mock',
-      fs: 'empty',
-      http2: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    },
   };
 };

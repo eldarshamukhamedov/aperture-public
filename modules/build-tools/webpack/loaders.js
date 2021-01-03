@@ -1,13 +1,7 @@
 import postcssFlexbugsFixes from 'postcss-flexbugs-fixes';
 import postcssPresetEnv from 'postcss-preset-env';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { devOrOptimized } from '../utils';
-
-// Resolve static file imports (catch-all)
-export const fileLoader = () => ({
-  loader: 'file-loader',
-  options: { name: 'static/media/[name].[hash:8].[ext]' },
-});
+import { devOrOptimized, resolveLocalDependency } from '../utils.js';
 
 // Inline CSS in <style> tags in development mode
 export const inlineStylesLoader = () =>
@@ -35,11 +29,13 @@ export const cssLoader = ({ importLoaders = 0 }) => ({
 
 // Polyfill CSS based on the browserlist config
 export const postCssLoader = () => ({
-  loader: 'postcss-loader',
+  loader: resolveLocalDependency('postcss-loader'),
   options: {
-    ident: 'postcss',
-    plugins: [postcssFlexbugsFixes, postcssPresetEnv({ stage: 2 })],
-    sourceMap: true,
+    postcssOptions: {
+      ident: 'postcss',
+      plugins: [postcssFlexbugsFixes, postcssPresetEnv({ stage: 2 })],
+      sourceMap: true,
+    },
   },
 });
 
@@ -47,18 +43,6 @@ export const postCssLoader = () => ({
 export const sassLoader = () => ({
   loader: 'sass-loader',
   options: { sourceMap: true },
-});
-
-// Resolve image imports and inline smaller images
-export const imageLoader = () => ({
-  loader: 'url-loader',
-  options: {
-    name: 'static/media/[name].[hash:8].[ext]',
-    // For very small images, such as logos or icons, the overhead of fetching
-    // these images over the network can add up quickly. It is better to transform
-    // them to base64 URIs and inline them.
-    limit: 8192,
-  },
 });
 
 // Resolve and compile JS and TS imports

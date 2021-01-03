@@ -1,6 +1,6 @@
 import { realpathSync, readFileSync } from 'fs';
-import { once, merge } from 'lodash';
-import git from 'git-rev-sync';
+import { isEmpty, negate, once, merge } from 'lodash-es';
+import shell from 'shelljs';
 import dotenv from 'dotenv';
 
 // Toggle between two values based on condition. When the `selector` function
@@ -25,16 +25,25 @@ export const uploadSourceMaps = toggle(() =>
 // Get current Git info, such as the latest (HEAD) commit SHA and message, and
 // whether there are any unstaged or uncommitted changes.  This is useful for
 // detecting code changes that have not yet been logged as a separate release.
-export const getGitInfo = once(() => ({
-  short: git.short(),
-  long: git.long(),
-  branch: git.branch(),
-  date: git.date(),
-  message: git.message(),
-  hasUnstagedChanges: git.hasUnstagedChanges(),
-  isDirty: git.isDirty(),
-  tag: git.tag(),
-}));
+export const getGitInfo = once(() => {
+  const isNotEmpty = negate(isEmpty);
+  // Get the current commit SHA (short-form)
+  const git = (...args) =>
+    shell
+      .exec(`git ${args.join(' ')}`, { silent: true })
+      .stdout.replace('\n', '');
+
+  return {
+    short: git('rev-parse', '--short', 'HEAD'),
+    long: git('rev-parse', 'HEAD'),
+    branch: git('rev-parse', '--abbrev-ref', 'HEAD'),
+    date: git('log', '-n', '1', '--pretty=format:"%ad"'),
+    message: git('log', '-1', '--pretty=%B'),
+    hasUnstagedChanges: isNotEmpty(git('diff-index', git('write-tree'))),
+    isDirty: isNotEmpty(git('diff-index', 'HEAD')),
+    tag: git('describe', '--always', '--tag', '--dirty', '--abbrev=0'),
+  };
+});
 
 // Resolve an absolute path to the package root. This is *not* the monorepo
 // path, but rather the path to a specific package within the monorepo.
@@ -137,4 +146,15 @@ export const log = (...args) => {
   const prettyPrint = (value) => JSON.stringify(value, null, 2);
   // eslint-disable-next-line
   console.log(`[${APP_NAME || 'WebpackBuild'}]`, ...args.map(prettyPrint));
+};
+
+// Resolve absolute path to a local (inside of @aperture.io/build-tools)
+// dependency. This is hacky, but ESM `import.meta.resolve` is not yet stable in
+// Node 14, and this is the only way to load some Webpack loaders from outside
+// of their build context
+// More details:
+// https://nodejs.org/api/esm.html#esm_import_meta_resolve_specifier_parent
+export const resolveLocalDependency = (packageName = '') => {
+  const url = new URL(`./node_modules/${packageName}`, import.meta.url);
+  return url.pathname;
 };

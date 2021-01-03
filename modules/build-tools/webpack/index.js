@@ -1,3 +1,3 @@
-export * as configs from './configs';
-export * as loaders from './loaders';
-export * as plugins from './plugins';
+export * as configs from './configs/index.js';
+export * as loaders from './loaders.js';
+export * as plugins from './plugins.js';

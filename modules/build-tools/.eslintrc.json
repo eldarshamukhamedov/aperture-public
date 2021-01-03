@@ -1,4 +1,17 @@
 {
   "root": true,
-  "extends": "@aperture.io/eslint-config"
+  "extends": "@aperture.io/eslint-config",
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "always",
+        "mjs": "always",
+        "jsx": "always",
+        "ts": "always",
+        "tsx": "always"
+      }
+    ]
+  }
 }

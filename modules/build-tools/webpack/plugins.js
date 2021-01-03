@@ -1,21 +1,19 @@
-import { mapValues, merge, pick } from 'lodash';
-
+import { mapValues, merge, pick } from 'lodash-es';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import EsLintPlugin from 'eslint-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin';
+import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
-import safePostCssParser from 'postcss-safe-parser';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
-import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModulesPlugin';
+import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModulesPlugin.js';
 import webpack from 'webpack';
 
-import { devOrOptimized, loadEnv } from '../utils';
+import { devOrOptimized, loadEnv } from '../utils.js';
 
 // Minimize and mangle JS
 export const minimizeJsPlugin = (overrideConfig = {}) => {
@@ -27,20 +25,15 @@ export const minimizeJsPlugin = (overrideConfig = {}) => {
       output: { ecma: 8, ascii_only: true, safari10: false },
     },
     parallel: true,
-    cache: true,
-    sourceMap: true,
   };
   return new TerserPlugin(merge(defaultConfig, overrideConfig));
 };
 
 // Minimize CSS
-export const minimizeCssPlugin = () =>
-  new OptimizeCssAssetsPlugin({
-    cssProcessorOptions: {
-      parser: safePostCssParser,
-      map: { inline: false, annotation: true },
-    },
-  });
+export const minimizeCssPlugin = (overrideConfig = {}) => {
+  const defaultConfig = { sourceMap: true };
+  return new CssMinimizerPlugin(merge(defaultConfig, overrideConfig));
+};
 
 // Run ESLint checks
 export const eslintPlugin = (overrideConfig = {}) => {
@@ -158,4 +151,13 @@ export const bundleAnalyzerPlugin = (overrideConfig = {}) => {
     null,
     new BundleAnalyzerPlugin(merge(defaultConfig, overrideConfig)),
   );
+};
+
+// Automatically import packages as globals
+export const providePlugin = (overrideConfig = {}) => {
+  const defaultConfig = {
+    // Polyfill Node process modules
+    process: 'process/browser',
+  };
+  return new webpack.ProvidePlugin(merge(defaultConfig, overrideConfig));
 };

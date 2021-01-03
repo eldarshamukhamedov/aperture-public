@@ -1,2 +1,2 @@
-export { createConfig as createReactClientConfig } from './reactClient';
-export { createConfig as createReactClientDevServerConfig } from './reactClient.devServer';
+export { createConfig as createReactClientConfig } from './reactClient.js';
+export { createConfig as createReactClientDevServerConfig } from './reactClient.devServer.js';
