@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "extends": "@aperture.io/eslint-config",
+  "globals": {
+    "CODE_VERSION_KEY": "readonly",
+    "NODE_ENV": "readonly",
+    "PACKAGE_VERSION": "readonly"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "./",
+          "./source",
+          "./modules/analytics",
+          "./modules/analytics/source"
+        ]
+      }
+    }
+  }
+}
