@@ -11,8 +11,8 @@
   "scripts": {
     "build": "npx lerna run --parallel build",
     "clean": "npx lerna clean -y && rm -rf ./node_modules",
-    "format:check": "npx prettier \"{apps,modules}/**/*.{js,jsx,ts,tsx}\" --list-different",
-    "format:fix": "npx prettier \"{apps,modules}/**/*.{js,jsx,ts,tsx}\" --write",
+    "format:check": "npx prettier \"{apps,modules}/**/*.{js,mjs,cjs,jsx,ts,tsx}\" --list-different",
+    "format:fix": "npx prettier \"{apps,modules}/**/*.{js,mjs,cjs,jsx,ts,tsx}\" --write",
     "install": "./scripts/vscode/setup.sh && npx lerna bootstrap",
     "lint": "npx lerna run --parallel lint",
     "start": "npx lerna run --parallel start",
@@ -37,8 +37,8 @@
     "cjs": true
   },
   "resolutions": {
-    "yarn": "1.22.5",
-    "**/yarn": "1.22.5"
+    "yarn": "1.22.10",
+    "**/yarn": "1.22.10"
   },
   "devDependencies": {
     "@octokit/core": "3.2.1",
@@ -48,6 +48,6 @@
     "prettier": "2.2.1",
     "pretty-quick": "3.1.0",
     "typescript": "4.1.3",
-    "yarn": "1.22.5"
+    "yarn": "1.22.10"
   }
 }

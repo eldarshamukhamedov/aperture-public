@@ -1,0 +1,82 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.1.0
+
+references:
+  login_to_private_npm_registry: &login_to_private_npm_registry
+    run:
+      name: 'Login to NPM'
+      command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+
+jobs:
+  test:
+    executor:
+      name: node/default
+      tag: '14.15'
+    steps:
+      - checkout
+      - *login_to_private_npm_registry
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: 'Run formatting checks'
+          command: yarn format:check
+      - run:
+          name: 'Run lint checks'
+          command: yarn lint
+      - run:
+          name: 'Run Typescript checks'
+          command: yarn types:check
+      - run:
+          name: 'Run tests'
+          command: yarn test
+
+  # apps/example-react-client
+  build-ExampleReactClient:
+    executor:
+      name: node/default
+      tag: '14.15'
+    steps:
+      - checkout
+      - *login_to_private_npm_registry
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: 'Build a production bundle'
+          working_directory: ./apps/example-react-client
+          command: NODE_ENV=production yarn build
+  deploy-ExampleReactClient:
+    executor:
+      name: node/default
+      tag: '14.15'
+    steps:
+      - checkout
+      - *login_to_private_npm_registry
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: 'Deploy production bundle'
+          working_directory: ./apps/example-react-client
+          command: ./scripts/deploy.production.sh
+
+workflows:
+  version: 2
+  # apps/example-react-client
+  ExampleReactClient:
+    jobs:
+      - test
+      - build-ExampleReactClient
+      - deploy-approval:
+          type: approval
+          requires:
+            - test
+            - build-ExampleReactClient
+          filters:
+            branches:
+              only: /main/
+      - deploy-ExampleReactClient:
+          requires:
+            - deploy-approval
+          filters:
+            branches:
+              only: /main/
