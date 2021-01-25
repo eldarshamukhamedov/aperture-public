@@ -79,6 +79,9 @@ const reactRules = {
     // Match custom effect hooks that you want to enforce this rule for here
     // { additionalHooks: '()' }
   ],
+  // With Typescript, type checks are sufficient to ensure default prop values
+  // are always set.
+  'react/require-default-props': 'off',
 };
 
 // This rule relies on ESLint's abstract syntax tree (AST) parser selectors.

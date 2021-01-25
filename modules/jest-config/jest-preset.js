@@ -17,4 +17,7 @@ module.exports = {
     '^.+\\.(bmp|png|svg|woff)$': '@aperture.io/jest-config/fileTransformer.js',
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
+  moduleNameMapper: {
+    '^lodash-es$': 'lodash',
+  },
 };
