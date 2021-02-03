@@ -19,10 +19,12 @@ export const createConfig = () => {
     historyApiFallback: true,
     host: 'localhost',
     hot: true,
+    injectClient: false,
     port: APP_PORT,
     public: `${APP_HOST}:${APP_PORT}`,
     publicPath: PUBLIC_PATH,
     stats: { children: false, modules: false },
+    transportMode: 'ws',
     watchContentBase: true,
     watchOptions: { ignored: /node_modules/ },
   };
