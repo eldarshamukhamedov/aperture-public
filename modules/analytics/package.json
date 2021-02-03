@@ -12,7 +12,7 @@
   "scripts": {
     "build": "DISABLE_V8_COMPILE_CACHE=1 OPTIMIZED=true npx webpack --config ./webpack.config.js",
     "lint": "npx eslint . --ext=js,mjs,cjs,jsx,ts,tsx",
-    "start": "DISABLE_V8_COMPILE_CACHE=1 WDS=true npx webpack serve --color --config ./webpack.config.js",
+    "start": "echo 'Not yet implemented'",
     "start:typescript": "npx tsc --watch",
     "test": "NODE_ENV=testing jest . --passWithNoTests",
     "types:check": "npx tsc --noEmit"
