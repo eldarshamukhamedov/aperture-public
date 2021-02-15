@@ -1,5 +1,4 @@
 {
-  "private": false,
   "name": "@aperture.io/eslint-config",
   "version": "1.0.0",
   "description": "Shared ESLint config",
