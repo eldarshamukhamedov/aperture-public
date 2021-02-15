@@ -1,9 +1,14 @@
 {
   "name": "@aperture.io/eslint-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared ESLint config",
   "author": "Eldar Shamukhamedov",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eldarshamukhamedov/aperture-public.git",
+    "directory": "modules/eslint-config"
+  },
   "engines": {
     "node": ">=14"
   },
